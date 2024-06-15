@@ -1,4 +1,4 @@
-import { Delays, greeter } from '../src/main.js';
+import { Delays, arrayDeepCopy, greeter } from '../src/main.js';
 
 describe('greeter function', () => {
   const name = 'John';
@@ -38,5 +38,35 @@ describe('greeter function', () => {
   // Assert greeter result
   it('greets a user with `Hello, {name}` message', () => {
     expect(hello).toBe(`Hello, ${name}`);
+  });
+});
+
+describe('arrayDeepCopy function', () => {
+  const array = [
+    { key: 'value' },
+    [{ key: 'value' }],
+    { key: [{ key: 'value' }] },
+  ];
+
+  let copy = [];
+
+  beforeAll(() => {
+    copy = arrayDeepCopy(array);
+  });
+
+  it('performs a deep copy of an array', () => {
+    expect(copy).toEqual(array);
+    expect(copy).not.toBe(array);
+  });
+
+  it('performs a deep copy of each item in the array', () => {
+    expect(copy[0]).toEqual(array[0]);
+    expect(copy[0]).not.toBe(array[0]);
+
+    expect(copy[1]).toEqual(array[1]);
+    expect(copy[1]).not.toBe(array[1]);
+
+    expect(copy[2]).toEqual(array[2]);
+    expect(copy[2]).not.toBe(array[2]);
   });
 });
