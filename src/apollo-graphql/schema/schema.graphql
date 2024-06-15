@@ -1,0 +1,24 @@
+type Query {
+  getPageMetadataByUrl(url: String!): WebPageMetadata
+  getPageMetadataByDateRange(startDate: String!, endDate: String!): [WebPageMetadata]
+  getPageMetadataByPageTitle(title: String): [WebPageMetadata]
+  getPageMetadataByWordCount(count: Int!): [WebPageMetadata]
+}
+
+type Mutation {
+  insertPageMetadata(input: InsertPageMetadataInput!): WebPageMetadata
+}
+
+type WebPageMetadata {
+  url: String!
+  crawlDate: String!
+  pageTitle: String!
+  wordCount: Int!
+}
+
+input InsertPageMetadataInput {
+  url: String!
+  crawlDate: String!
+  pageTitle: String!
+  wordCount: Int!
+}

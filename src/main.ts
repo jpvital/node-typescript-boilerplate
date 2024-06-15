@@ -23,6 +23,30 @@ function delayedHello(
   );
 }
 
+function itemDeepCopy<T>(item: T): T {
+  if (Boolean(item) === false || typeof item !== 'object') {
+    return item;
+  }
+
+  // by checking if the item is an array we can then apply itemDeepCopy to each element
+  if (Array.isArray(item)) {
+    return item.map(element => itemDeepCopy(element)) as unknown as T;
+  }
+
+  const itemCopy = {} as T;
+  for (const key in item) {
+    // using recursion to handle nested objects and arrays
+    itemCopy[key] = itemDeepCopy((item as T)[key]);
+  }
+
+  return itemCopy;
+}
+
+// using <T>, the function is type safe can be used with any type of array
+export function arrayDeepCopy<T>(inputArray: T[]): T[] {
+  return inputArray.map(item => itemDeepCopy(item));
+}
+
 // Please see the comment in the .eslintrc.json file about the suppressed rule!
 // Below is an example of how to use ESLint errors suppression. You can read more
 // at https://eslint.org/docs/latest/user-guide/configuring/rules#disabling-rules
